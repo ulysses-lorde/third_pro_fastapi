@@ -1,5 +1,5 @@
+from sqlalchemy import CHAR, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import String, Integer, CHAR
 
 from third_pro.configs.base import Base
 

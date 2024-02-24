@@ -1,11 +1,15 @@
 from typing import Optional
 
-from sqlalchemy.exc import NoResultFound
-from sqlalchemy import select
-
 from third_pro.configs.connection import DBConnectionHandler
 from third_pro.db.tables.products import Product
-from third_pro.schemas.products_schemas import ProductSchema, ProductRead, ProductList
+from third_pro.schemas.products_schemas import (
+    ProductList,
+    ProductRead,
+    ProductSchema,
+)
+
+# from sqlalchemy.exc import NoResultFound
+# from sqlalchemy import select
 
 
 class ProductsRepository:
@@ -19,7 +23,7 @@ class ProductsRepository:
                     product_name=product.product_name,
                     product_category=product.product_category,
                     product_price=product.product_price,
-                    stock=product.stock
+                    stock=product.stock,
                 )
                 db.session.add(data_insert)
                 db.session.commit()
@@ -35,10 +39,7 @@ class ProductsRepository:
         with self.db_handler as db:
             try:
                 products = (
-                    db.session.query(Product)
-                    .offset(offset)
-                    .limit(limit)
-                    .all()
+                    db.session.query(Product).offset(offset).limit(limit).all()
                 )
                 return ProductList(products=products)
 
@@ -72,7 +73,9 @@ class ProductsRepository:
     def delete(self, product_id):
         with DBConnectionHandler() as db:
             try:
-                db.session.query(Product).filter(Product.id == product_id).delete()
+                db.session.query(Product).filter(
+                    Product.id == product_id
+                ).delete()
                 db.session.commit()
             except Exception as exception:
                 db.session.rollback()

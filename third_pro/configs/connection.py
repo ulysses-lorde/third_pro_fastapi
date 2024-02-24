@@ -1,7 +1,8 @@
 import logging
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import sessionmaker
 
 from third_pro.configs.settings import Settings
 
@@ -23,7 +24,7 @@ class DBConnectionHandler:
         session_maker = sessionmaker(bind=self.__engine)
         self.session = session_maker()
         return self
-    
+
     def __exit__(self, exc_type, exc_val, exc_tb):
         try:
             if exc_type is None:
@@ -31,7 +32,7 @@ class DBConnectionHandler:
             else:
                 self.session.rollback()
         except SQLAlchemyError as e:
-            logging.error("An error occurred during transaction: %s", e)
+            logging.error('An error occurred during transaction: %s', e)
             raise
         finally:
             self.session.close()

@@ -1,5 +1,5 @@
+from sqlalchemy import Float, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import Integer, String, Float
 
 from third_pro.configs.base import Base
 
@@ -12,4 +12,3 @@ class Product(Base):
     product_category: Mapped[str] = mapped_column(String(50), nullable=False)
     product_price: Mapped[float] = mapped_column(Float, nullable=False)
     stock: Mapped[int] = mapped_column(Integer, nullable=False)
-    
